@@ -15,8 +15,8 @@ from teuthology.repo_utils import fetch_repo
 
 from teuthology.task import Task
 
-log = logging.getLogger(__name__)
-
+log = logging.Logger(__name__)
+log.setLevel(logging.INFO)
 
 class LoggerFile(object):
     """
@@ -115,6 +115,8 @@ class Ansible(Task):
         self.log = log
         self.generated_inventory = False
         self.generated_playbook = False
+        log.addHandler(logging.FileHandler(os.path.join(ctx.archive,
+                                                     "ansible.log")))
 
     def setup(self):
         super(Ansible, self).setup()
@@ -278,7 +280,7 @@ class Ansible(Task):
         command = ' '.join(args)
         log.debug("Running %s", command)
 
-        out_log = self.log.getChild('out')
+        out_log = log
         out, status = pexpect.run(
             command,
             cwd=self.repo_path,
