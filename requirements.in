@@ -11,7 +11,7 @@ netaddr
 paramiko
 psutil >= 2.1.0
 configparser
-ansible>=2.8,<2.10
+ansible>=2.8,<4.3
 prettytable
 manhole
 humanfriendly
