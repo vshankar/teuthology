@@ -1089,7 +1089,7 @@ def get_latest_image_version_deb(remote, ostype):
                 return newest
     # Ubuntu is a depend in a depend.
     if 'ubuntu' in ostype:
-        name = 'linux-generic'
+        name = 'linux-image-generic'
 
         args=['sudo', 'DEBIAN_FRONTEND=noninteractive',
               'apt-get', '-y', 'install', name]
