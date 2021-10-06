@@ -1089,26 +1089,14 @@ def get_latest_image_version_deb(remote, ostype):
                 return newest
     # Ubuntu is a depend in a depend.
     if 'ubuntu' in ostype:
-        try:
-            args=['sudo', 'DEBIAN_FRONTEND=noninteractive',
-                  'apt-get', '-y', 'install', 'linux-image-current-generic']
-            install_dep_packages(remote, args)
-            remote.run(args=['dpkg', '-s', 'linux-image-current-generic'],
-                       stdout=output)
-            for line in output.getvalue().split('\n'):
-                if 'Depends:' in line:
-                    depends = line.split('Depends: ')[1]
-                    install_dep_packages(remote, args=['sudo', 'apt-get', '-y',
-                                                       'install', depends])
-            remote.run(args=['dpkg', '-s', depends], stdout=output)
-        except run.CommandFailedError:
-            # Non precise ubuntu machines (like trusty) don't have
-            # linux-image-current-generic so use linux-image-generic instead.
-            args=['sudo', 'DEBIAN_FRONTEND=noninteractive',
-                  'apt-get', '-y', 'install', 'linux-image-generic']
-            install_dep_packages(remote, args)
-            remote.run(args=['dpkg', '-s', 'linux-image-generic'],
-                       stdout=output)
+        name = 'linux-generic'
+
+        args=['sudo', 'DEBIAN_FRONTEND=noninteractive',
+              'apt-get', '-y', 'install', name]
+        install_dep_packages(remote, args)
+        remote.run(args=['dpkg', '-s', name],
+                   stdout=output)
+
         for line in output.getvalue().split('\n'):
             if 'Depends:' in line:
                 newest = line.split('linux-image-')[1]
