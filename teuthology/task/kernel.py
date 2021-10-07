@@ -79,7 +79,7 @@ def normalize_config(ctx, config):
     """
     if not config or \
             len([x for x in config.keys() if x in
-                VERSION_KEYS + ['kdb', 'flavor']]) == len(config.keys()):
+                VERSION_KEYS + ['kdb', 'flavor', 'hwe']]) == len(config.keys()):
         new_config = {}
         if not config:
             config = CONFIG_DEFAULT
