@@ -77,6 +77,7 @@ def normalize_config(ctx, config):
     :param ctx: Context
     :param config: Configuration
     """
+    log.info(f'normalize config orig: {config}')
     if not config or \
             len([x for x in config.keys() if x in
                 VERSION_KEYS + ['kdb', 'flavor', 'hwe']]) == len(config.keys()):
@@ -99,6 +100,7 @@ def normalize_config(ctx, config):
                 # specific overrides generic
                 if name not in config:
                     new_config[name] = role_config.copy()
+    log.info(f'normalize config final: {new_config}')
     return new_config
 
 
